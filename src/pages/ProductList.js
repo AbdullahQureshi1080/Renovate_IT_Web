@@ -3,16 +3,29 @@ import {
   Box,
   Container,
   Grid,
-  Pagination
+  Pagination,
+  Button
 } from '@material-ui/core';
 import ProductListToolbar from 'src/components/product/ProductListToolbar';
 import ProductCard from 'src/components/product//ProductCard';
 import products from 'src/__mocks__/products';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import NewProduct from 'src/components/product/NewProduct';
 
-const ProductList = () => (
+const ProductList = () =>{
+  const [renderForm,setRenderForm] = useState(false);
+  // const navigate = useNavigate();
+  const handleFormRender = ()=>{
+    setRenderForm(false);
+  }
+
+
+  return (
+
   <>
     <Helmet>
-      <title>Products | Material Kit</title>
+      <title>Products</title>
     </Helmet>
     <Box
       sx={{
@@ -21,42 +34,67 @@ const ProductList = () => (
         py: 3
       }}
     >
-      <Container maxWidth={false}>
-        <ProductListToolbar />
-        <Box sx={{ pt: 3 }}>
-          <Grid
-            container
-            spacing={3}
+      {
+        !renderForm?(
+          <Container maxWidth={false}>
+          <ProductListToolbar onClickAdd={()=>setRenderForm(true)}/>
+          <Box sx={{ pt: 3 }}>
+            <Grid
+              container
+              spacing={3}
+            >
+              {products.map((product) => (
+                <Grid
+                  item
+                  key={product.id}
+                  lg={4}
+                  md={6}
+                  xs={12}
+                >
+                  <ProductCard product={product} />
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              pt: 3
+            }}
           >
-            {products.map((product) => (
-              <Grid
-                item
-                key={product.id}
-                lg={4}
-                md={6}
-                xs={12}
-              >
-                <ProductCard product={product} />
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            pt: 3
-          }}
-        >
-          <Pagination
+          </Box>
+        </Container>
+        )
+        :
+        (
+          <Box sx={{ pt: 3 }}>
+          <Container maxWidth={false}>
+          <Box
+           sx={{
+             display: 'flex',
+             justifyContent: 'flex-end',
+             paddingRight:3,
+            //  width:"50%"
+            }}
+            >
+          <Button
             color="primary"
-            count={3}
-            size="small"
-          />
-        </Box>
-      </Container>
+            variant="contained"
+            onClick={()=>setRenderForm(false)}
+            >
+            Cancel
+          </Button>
+          </Box>
+          <NewProduct onClose={handleFormRender}/>
+          </Container>
+          </Box>
+        )
+      }
+  
     </Box>
   </>
-);
+  )
+}
 
 export default ProductList;

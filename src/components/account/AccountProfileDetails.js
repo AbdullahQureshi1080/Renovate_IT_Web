@@ -9,30 +9,20 @@ import {
   Grid,
   TextField
 } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 
-const states = [
-  {
-    value: 'alabama',
-    label: 'Alabama'
-  },
-  {
-    value: 'new-york',
-    label: 'New York'
-  },
-  {
-    value: 'san-francisco',
-    label: 'San Francisco'
-  }
-];
+
 
 const AccountProfileDetails = (props) => {
+  const state = useSelector(state=>state);
+  const shop = state.entities.shop.data; 
   const [values, setValues] = useState({
-    firstName: 'Katarina',
-    lastName: 'Smith',
-    email: 'demo@devias.io',
-    phone: '',
-    state: 'Alabama',
-    country: 'USA'
+    shopName: shop.shopName,
+    // lastName: 'Smith',
+    email: shop.email,
+    phoneNumber: shop.phoneNumber,
+    // state: 'Alabama',
+    city: shop?.city,
   });
 
   const handleChange = (event) => {
@@ -66,27 +56,12 @@ const AccountProfileDetails = (props) => {
             >
               <TextField
                 fullWidth
-                helperText="Please specify the first name"
-                label="First name"
-                name="firstName"
+                helperText="Please specify the Shop Name"
+                label="Shop name"
+                name="shopName"
                 onChange={handleChange}
                 required
-                value={values.firstName}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Last name"
-                name="lastName"
-                onChange={handleChange}
-                required
-                value={values.lastName}
+                value={values.shopName}
                 variant="outlined"
               />
             </Grid>
@@ -113,10 +88,10 @@ const AccountProfileDetails = (props) => {
               <TextField
                 fullWidth
                 label="Phone Number"
-                name="phone"
+                name="phoneNumber"
                 onChange={handleChange}
-                type="number"
-                value={values.phone}
+                // type="number"
+                value={values.phoneNumber}
                 variant="outlined"
               />
             </Grid>
@@ -127,11 +102,11 @@ const AccountProfileDetails = (props) => {
             >
               <TextField
                 fullWidth
-                label="Country"
-                name="country"
+                label="City"
+                name="city"
                 onChange={handleChange}
                 required
-                value={values.country}
+                value={values.city}
                 variant="outlined"
               />
             </Grid>
@@ -140,7 +115,7 @@ const AccountProfileDetails = (props) => {
               md={6}
               xs={12}
             >
-              <TextField
+              {/* <TextField
                 fullWidth
                 label="Select State"
                 name="state"
@@ -159,7 +134,7 @@ const AccountProfileDetails = (props) => {
                     {option.label}
                   </option>
                 ))}
-              </TextField>
+              </TextField> */}
             </Grid>
           </Grid>
         </CardContent>

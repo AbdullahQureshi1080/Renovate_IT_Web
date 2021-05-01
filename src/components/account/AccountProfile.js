@@ -9,6 +9,8 @@ import {
   Divider,
   Typography
 } from '@material-ui/core';
+import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 
 const user = {
   avatar: '/static/images/avatars/avatar_6.png',
@@ -19,7 +21,14 @@ const user = {
   timezone: 'GTM-7'
 };
 
-const AccountProfile = (props) => (
+const AccountProfile = (props) => {
+  const state = useSelector(state=>state);
+  const shop = state.entities.shop.data; 
+  const [image,setImage] = useState("")
+  useEffect(() => {  
+      setImage(shop.image === null?"https://via.placeholder.com/150":shop.image)
+  }, []);
+  return(
   <Card {...props}>
     <CardContent>
       <Box
@@ -30,7 +39,7 @@ const AccountProfile = (props) => (
         }}
       >
         <Avatar
-          src={user.avatar}
+           src={image}
           sx={{
             height: 100,
             width: 100
@@ -41,20 +50,21 @@ const AccountProfile = (props) => (
           gutterBottom
           variant="h3"
         >
-          {user.name}
+          {shop.shopName}
         </Typography>
         <Typography
           color="textSecondary"
-          variant="body1"
+          gutterBottom
+          variant="h4"
         >
-          {`${user.city} ${user.country}`}
+          {shop.email}
         </Typography>
-        <Typography
+        {/* <Typography
           color="textSecondary"
           variant="body1"
         >
-          {`${moment().format('hh:mm A')} ${user.timezone}`}
-        </Typography>
+          {`${moment().format('hh:mm A')} ${shop.date}`}
+        </Typography> */}
       </Box>
     </CardContent>
     <Divider />
@@ -68,6 +78,7 @@ const AccountProfile = (props) => (
       </Button>
     </CardActions>
   </Card>
-);
+  )
+};
 
 export default AccountProfile;

@@ -5,15 +5,15 @@ import typography from './typography';
 const theme = createMuiTheme({
   palette: {
     background: {
-      default: '#F4F6F8',
+      default: '#e8e8e8',
       paper: colors.common.white
     },
     primary: {
       contrastText: '#ffffff',
-      main: '#5664d2'
+      main: "#495464",
     },
     text: {
-      primary: '#172b4d',
+      primary: '#1b262c',
       secondary: '#6b778c'
     }
   },

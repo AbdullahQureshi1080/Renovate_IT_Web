@@ -6,21 +6,48 @@ import {
   Box,
   Button,
   Container,
-  Grid,
   Link,
   TextField,
   Typography
 } from '@material-ui/core';
-import FacebookIcon from 'src/icons/Facebook';
-import GoogleIcon from 'src/icons/Google';
+import {useDispatch,useSelector} from 'react-redux';
+import storeAPI from  "../api/auth";
+import { setShopData, loginShop} from "../store/shop";
+import { useState } from 'react';
+import useAuth from 'src/hooks/useAuth';
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  const store = state.entities.store;
   const navigate = useNavigate();
+  const auth = useAuth();
+  // const loginApi = useApi(storeAPI.login);
+  const [loginFailed, setLoginFailed] = useState(false); 
+  const [isLoading, setIsLoading] = useState(false); 
 
+  const handleSubmit=async (values)=>{
+
+    console.log("In login",values)
+    // Api Call
+    setIsLoading(true);
+    const result = await storeAPI.login(values.email, values.password);
+    if (!result.ok) {
+      setIsLoading(false);
+      setLoginFailed(true);
+      return;
+    }
+    console.log(result.data)
+    setLoginFailed(false);
+    dispatch(loginShop(result.data));
+    auth.logIn(result.data);
+    setIsLoading(false);
+    navigate('/app/dashboard', { replace: true, });
+  }
   return (
     <>
       <Helmet>
-        <title>Login | Material Kit</title>
+        <title>Login</title>
       </Helmet>
       <Box
         sx={{
@@ -34,16 +61,14 @@ const Login = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: 'demo@devias.io',
-              password: 'Password123'
+              email: '',
+              password: ''
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
               password: Yup.string().max(255).required('Password is required')
             })}
-            onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
-            }}
+            onSubmit={handleSubmit}
           >
             {({
               errors,
@@ -68,56 +93,6 @@ const Login = () => {
                     variant="body2"
                   >
                     Sign in on the internal platform
-                  </Typography>
-                </Box>
-                <Grid
-                  container
-                  spacing={3}
-                >
-                  <Grid
-                    item
-                    xs={12}
-                    md={6}
-                  >
-                    <Button
-                      color="primary"
-                      fullWidth
-                      startIcon={<FacebookIcon />}
-                      onClick={handleSubmit}
-                      size="large"
-                      variant="contained"
-                    >
-                      Login with Facebook
-                    </Button>
-                  </Grid>
-                  <Grid
-                    item
-                    xs={12}
-                    md={6}
-                  >
-                    <Button
-                      fullWidth
-                      startIcon={<GoogleIcon />}
-                      onClick={handleSubmit}
-                      size="large"
-                      variant="contained"
-                    >
-                      Login with Google
-                    </Button>
-                  </Grid>
-                </Grid>
-                <Box
-                  sx={{
-                    pb: 1,
-                    pt: 3
-                  }}
-                >
-                  <Typography
-                    align="center"
-                    color="textSecondary"
-                    variant="body1"
-                  >
-                    or login with email address
                   </Typography>
                 </Box>
                 <TextField

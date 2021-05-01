@@ -7,7 +7,11 @@ import {
   InputAdornment,
   SvgIcon
 } from '@material-ui/core';
+import {useNavigate} from "react-router-dom";
 import { Search as SearchIcon } from 'react-feather';
+
+// const navigate = useNavigate();
+//  handleClick = navigate("/new-product", {replace:true}),
 
 const ProductListToolbar = (props) => (
   <Box {...props}>
@@ -17,15 +21,16 @@ const ProductListToolbar = (props) => (
         justifyContent: 'flex-end'
       }}
     >
-      <Button>
+      {/* <Button>
         Import
-      </Button>
-      <Button sx={{ mx: 1 }}>
+      </Button> */}
+      {/* <Button sx={{ mx: 1 }}>
         Export
-      </Button>
+      </Button> */}
       <Button
         color="primary"
         variant="contained"
+        onClick={props.onClickAdd}
       >
         Add product
       </Button>
@@ -56,6 +61,6 @@ const ProductListToolbar = (props) => (
       </Card>
     </Box>
   </Box>
-);
+)
 
 export default ProductListToolbar;

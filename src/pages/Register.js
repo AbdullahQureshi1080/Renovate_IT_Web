@@ -12,14 +12,44 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
+import {useDispatch,useSelector} from 'react-redux';
+import storeAPI from  "../api/auth";
+import { setShopData, loginShop } from "../store/shop";
+// import useApi from 'src/hooks/useApi.js';
+import { useState } from 'react';
 
 const Register = () => {
+  const phoneRegExp = /^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$/
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  const store = state.entities.shop;
   const navigate = useNavigate();
+  // const loginApi = useApi(storeAPI.login);
+  const [loginFailed, setLoginFailed] = useState(false); 
+  const [isLoading, setIsLoading] = useState(false); 
+
+  const handleSubmit=async ({shopName,phoneNumber,email,password})=>{
+    
+    console.log("In Register",shopName,phoneNumber,email,password);
+    // Api Call
+    setIsLoading(true);
+    const result = await storeAPI.register(shopName,phoneNumber,email,password);
+    if (!result.ok) {
+      setIsLoading(false);
+      setLoginFailed(true);
+      return;
+    }
+    console.log(result.data)
+    setLoginFailed(false);
+    dispatch(loginShop(result.data));
+    setIsLoading(false);
+    navigate('/login', { replace: true, });
+  }
 
   return (
     <>
       <Helmet>
-        <title>Register | Material Kit</title>
+        <title>Register Your Shop </title>
       </Helmet>
       <Box
         sx={{
@@ -34,23 +64,24 @@ const Register = () => {
           <Formik
             initialValues={{
               email: '',
-              firstName: '',
-              lastName: '',
+              shopName: '',
               password: '',
+              phoneNumber:'',
               policy: false
             }}
             validationSchema={
               Yup.object().shape({
                 email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-                firstName: Yup.string().max(255).required('First name is required'),
-                lastName: Yup.string().max(255).required('Last name is required'),
+                shopName: Yup.string().max(255).required('First name is required'),
                 password: Yup.string().max(255).required('password is required'),
+                phoneNumber: Yup.string().matches(phoneRegExp, ('Phone number is not valid, Number start with +92 or 03XX')),
                 policy: Yup.boolean().oneOf([true], 'This field must be checked')
               })
             }
-            onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
+            onSubmit={(values)=>{
+            handleSubmit(values);
             }}
+            // handleSubmit=
           >
             {({
               errors,
@@ -78,27 +109,27 @@ const Register = () => {
                   </Typography>
                 </Box>
                 <TextField
-                  error={Boolean(touched.firstName && errors.firstName)}
+                  error={Boolean(touched.shopName && errors.shopName)}
                   fullWidth
-                  helperText={touched.firstName && errors.firstName}
-                  label="First name"
+                  helperText={touched.shopName && errors.shopName}
+                  label="Shop Name"
                   margin="normal"
-                  name="firstName"
+                  name="shopName"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.firstName}
+                  value={values.shopName}
                   variant="outlined"
                 />
                 <TextField
-                  error={Boolean(touched.lastName && errors.lastName)}
+                  error={Boolean(touched.phoneNumber && errors.phoneNumber)}
                   fullWidth
-                  helperText={touched.lastName && errors.lastName}
-                  label="Last name"
+                  helperText={touched.phoneNumber && errors.phoneNumber}
+                  label="Phone Number"
                   margin="normal"
-                  name="lastName"
+                  name="phoneNumber"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.lastName}
+                  value={values.phoneNumber}
                   variant="outlined"
                 />
                 <TextField
@@ -169,6 +200,7 @@ const Register = () => {
                     size="large"
                     type="submit"
                     variant="contained"
+                    style={styles.submitButton}
                   >
                     Sign up now
                   </Button>
@@ -195,5 +227,12 @@ const Register = () => {
     </>
   );
 };
+
+const styles  = {
+  submitButton:{
+    backgroundColor:"#e8e8e8",
+    color:"red",
+  }
+}
 
 export default Register;

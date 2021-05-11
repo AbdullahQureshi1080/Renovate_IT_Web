@@ -10,7 +10,22 @@ const  addProduct = (email,productName,productDescription,productPrice,productIm
     productCategory,
   });
 
+  const  deleteProduct = (email,productId) =>
+  client.post('shop/deleteProduct', {
+    email,
+    productId
+  });
+
+
+  const  getAllUserProducts = (email) =>
+  client.post('shop/getAllUserProducts', {
+    email,
+  });
+
+
 
 export default {
- addProduct
+ addProduct,
+ getAllUserProducts,
+ deleteProduct,
 }

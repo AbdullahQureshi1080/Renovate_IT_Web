@@ -18,16 +18,15 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import {useDispatch,useSelector} from 'react-redux';
 import Image from '../Image';
 import uploadAsPromise  from "../../api/upload";
-import storeAPI from  "../../api/shop";
+import shopAPI from  "../../api/shop";
 import ProductCategories from './ProductCategories';
 
 
 const NewProduct = ({onClose}) => {
   const state = useSelector((state) => state);
-  const store = state.entities.store;
-  const storeId = store.data._id;
-  const storeEmail = store.data.email;
-  const navigate = useNavigate(); 
+  const shop = state.entities.shop;
+  const shopId = shop.data._id;
+  const shopEmail = shop.data.email;
   const [isLoading, setIsLoading] = useState(false); 
   const [image , setImage] = useState("") ;
   const [value , setValue] = useState("") ;
@@ -39,7 +38,7 @@ const NewProduct = ({onClose}) => {
     const uploadType = "shop";
     var type = "image";    
     let imageUri = "";
-    await uploadAsPromise (image,type,uploadType,storeId).then((res) => {
+    await uploadAsPromise (image,type,uploadType,shopId).then((res) => {
      imageUri = res
     });
     const data = {
@@ -53,7 +52,7 @@ const NewProduct = ({onClose}) => {
     console.log("Data for Api", data)
     // // Api Call
     setIsLoading(true);
-    const result = await storeAPI.addProduct(storeEmail,productName,productDescription,productPrice,imageUri,value.value);
+    const result = await shopAPI.addProduct(shopEmail,productName,productDescription,productPrice,imageUri,value.value);
     if (!result.ok) {
       setIsLoading(false);
       return;

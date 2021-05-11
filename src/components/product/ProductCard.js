@@ -9,14 +9,18 @@ import {
   Typography
 } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import GetAppIcon from '@material-ui/icons/GetApp';
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import CategoryIcon from '@material-ui/icons/Category';
 
-const ProductCard = ({ product, ...rest }) => (
+const ProductCard = ({ product, onClick, ...rest }) => {
+  return(
   <Card
+    onClick={onClick}
     sx={{
       display: 'flex',
       flexDirection: 'column',
-      height: '100%'
+      height: '100%',
+      width:"70%",
     }}
     {...rest}
   >
@@ -25,29 +29,42 @@ const ProductCard = ({ product, ...rest }) => (
         sx={{
           display: 'flex',
           justifyContent: 'center',
-          pb: 3
+          alignItems:"center",
+          alignContent:"center",
+          // pb: 3,
+          // style
+          // size=100,
+          height:600,
+          // backgroundColor:"red"
         }}
       >
         <Avatar
           alt="Product"
-          src={product.media}
+          src={product.productImage}
           variant="square"
+          style={{
+            width:"80%",
+            height:"80%",
+          }}
         />
       </Box>
+      
       <Typography
         align="center"
         color="textPrimary"
         gutterBottom
         variant="h4"
+        style={{marginTop:10,}}
       >
-        {product.title}
+        {product.productName}
       </Typography>
       <Typography
         align="center"
         color="textPrimary"
         variant="body1"
+        style={{marginTop:10,}}
       >
-        {product.description}
+        {product.productDescription}
       </Typography>
     </CardContent>
     <Box sx={{ flexGrow: 1 }} />
@@ -65,14 +82,14 @@ const ProductCard = ({ product, ...rest }) => (
             display: 'flex'
           }}
         >
-          <AccessTimeIcon color="action" />
+          <CategoryIcon color="action" />
           <Typography
             color="textSecondary"
             display="inline"
             sx={{ pl: 1 }}
             variant="body2"
           >
-            Updated 2hr ago
+           {product.productCategory}
           </Typography>
         </Grid>
         <Grid
@@ -82,22 +99,24 @@ const ProductCard = ({ product, ...rest }) => (
             display: 'flex'
           }}
         >
-          <GetAppIcon color="action" />
+          <LocalOfferIcon color="action" />
           <Typography
             color="textSecondary"
             display="inline"
             sx={{ pl: 1 }}
             variant="body2"
           >
-            {product.totalDownloads}
+            {product.productPrice}
             {' '}
-            Downloads
+            RS
           </Typography>
         </Grid>
       </Grid>
     </Box>
   </Card>
-);
+
+)
+}
 
 ProductCard.propTypes = {
   product: PropTypes.object.isRequired

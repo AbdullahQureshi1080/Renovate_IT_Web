@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { useEffect, useState } from "react";
+import { Link as RouterLink, useLocation } from "react-router-dom";
+import PropTypes from "prop-types";
 import {
   Avatar,
   Box,
@@ -10,7 +10,7 @@ import {
   Hidden,
   List,
   Typography
-} from '@material-ui/core';
+} from "@material-ui/core";
 import {
   // AlertCircle as AlertCircleIcon,
   BarChart as BarChartIcon,
@@ -20,84 +20,93 @@ import {
   User as UserIcon,
   // UserPlus as UserPlusIcon,
   Users as UsersIcon
-} from 'react-feather';
-import NavItem from './NavItem';
-import { useSelector } from 'react-redux';
-
+} from "react-feather";
+import NavItem from "./NavItem";
+import { useSelector } from "react-redux";
+import shopAPI from "../api/shop";
 const user = {
-  avatar: '/static/images/avatars/avatar_6.png',
-  jobTitle: 'Senior Developer',
-  name: 'Katarina Smith'
+  avatar: "/static/images/avatars/avatar_6.png",
+  jobTitle: "Senior Developer",
+  name: "Katarina Smith"
 };
 
 const items = [
   {
-    href: '/app/dashboard',
+    href: "/app/dashboard",
     icon: BarChartIcon,
-    title: 'Dashboard'
+    title: "Dashboard"
   },
+  // {
+  //   href: "/app/customers",
+  //   icon: UsersIcon,
+  //   title: "Customers"
+  // },
   {
-    href: '/app/customers',
-    icon: UsersIcon,
-    title: 'Customers'
-  },
-  {
-    href: '/app/products',
+    href: "/app/products",
     icon: ShoppingBagIcon,
-    title: 'Products'
+    title: "Products"
   },
   {
-    href: '/app/account',
+    href: "/app/account",
     icon: UserIcon,
-    title: 'Account'
+    title: "Account"
   },
   {
-    href: '/app/settings',
+    href: "/app/settings",
     icon: SettingsIcon,
-    title: 'Settings'
-  },
-  // {
-  //   href: '/login',
-  //   icon: LockIcon,
-  //   title: 'Login'
-  // },
-  // {
-  //   href: '/register',
-  //   icon: UserPlusIcon,
-  //   title: 'Register'
-  // },
-  // {
-  //   href: '/404',
-  //   icon: AlertCircleIcon,
-  //   title: 'Error'
-  // }
+    title: "Settings"
+  }
 ];
 
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const location = useLocation();
-  const state = useSelector(state=>state);
-  const shop = state.entities.shop.data; 
-  const [image,setImage] = useState("")
+  const [isLoading, setIsLoading] = useState(false);
+  const state = useSelector((state) => state);
+  const shop = state.entities.shop.data;
+  const [data, setData] = useState(null);
+  const shopId = shop._id;
+  const email = shop.email;
+  const [image, setImage] = useState(null);
+
+  const getShopData = async () => {
+    const result = await shopAPI.getShopData(shopId);
+    if (!result.ok) {
+      setIsLoading(false);
+      return;
+    }
+    console.log(result.data);
+    setData(result.data);
+    setImage(
+      result.data.image === null
+        ? "https://via.placeholder.com/150"
+        : result.data.image
+    );
+    setIsLoading(false);
+  };
+
   useEffect(() => {
+    getShopData();
     if (openMobile && onMobileClose) {
       onMobileClose();
-      setImage(shop.image === null?"https://via.placeholder.com/150":shop.image)
+      // setImage(
+      //   shop.image === null ? "https://via.placeholder.com/150" : shop.image
+      // );
     }
   }, [location.pathname]);
 
   const content = (
     <Box
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%'
+        display: "flex",
+        flexDirection: "column",
+        height: "100%"
       }}
     >
       <Box
         sx={{
-          alignItems: 'center',
-          display: 'flex',
-          flexDirection: 'column',
+          alignItems: "center",
+          display: "flex",
+          flexDirection: "column",
           p: 2
         }}
       >
@@ -105,23 +114,17 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           component={RouterLink}
           src={image}
           sx={{
-            cursor: 'pointer',
+            cursor: "pointer",
             width: 64,
             height: 64
           }}
           to="/app/account"
         />
-        <Typography
-          color="textPrimary"
-          variant="h5"
-        >
-          {shop?.shopName}
+        <Typography color="textPrimary" variant="h5">
+          {data?.shopName}
         </Typography>
-        <Typography
-          color="textSecondary"
-          variant="body2"
-        >
-          {shop?.email}
+        <Typography color="textSecondary" variant="body2">
+          {data?.email}
         </Typography>
       </Box>
       <Divider />
@@ -167,7 +170,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             sx: {
               width: 256,
               top: 64,
-              height: 'calc(100% - 64px)'
+              height: "calc(100% - 64px)"
             }
           }}
         >
@@ -184,7 +187,7 @@ DashboardSidebar.propTypes = {
 };
 
 DashboardSidebar.defaultProps = {
-  onMobileClose: () => { },
+  onMobileClose: () => {},
   openMobile: false
 };
 

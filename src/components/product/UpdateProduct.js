@@ -21,13 +21,13 @@ import uploadAsPromise from "../../api/upload";
 import shopAPI from "../../api/shop";
 import ProductCategories from "./ProductCategories";
 
-const NewProduct = ({ onClose }) => {
+const UpdateProduct = ({ onClose, product }) => {
   const state = useSelector((state) => state);
   const shop = state.entities.shop;
   const shopId = shop.data._id;
   const shopEmail = shop.data.email;
   const [isLoading, setIsLoading] = useState(false);
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(product.image);
   const [value, setValue] = useState("");
   const [preview, setPreview] = useState("");
 
@@ -62,21 +62,21 @@ const NewProduct = ({ onClose }) => {
     console.log("Data for Api", data);
     // // Api Call
     setIsLoading(true);
-    const result = await shopAPI.addProduct(
-      shopEmail,
-      productName,
-      productDescription,
-      productPrice,
-      imageUri,
-      value.value
-    );
-    if (!result.ok) {
-      setIsLoading(false);
-      return;
-    }
-    console.log(result.data);
-    setIsLoading(false);
-    onClose();
+    // const result = await shopAPI.updateProduct(
+    //   shopEmail,
+    //   productName,
+    //   productDescription,
+    //   productPrice,
+    //   imageUri,
+    //   value.value
+    // );
+    // if (!result.ok) {
+    //   setIsLoading(false);
+    //   return;
+    // }
+    // console.log(result.data);
+    // setIsLoading(false);
+    // onClose();
     // navigate('/app/products', { replace: true, });
   };
 
@@ -103,7 +103,7 @@ const NewProduct = ({ onClose }) => {
   return (
     <>
       <Helmet>
-        <title>New Product </title>
+        <title>Update Product </title>
       </Helmet>
       <Box
         sx={{
@@ -120,9 +120,9 @@ const NewProduct = ({ onClose }) => {
         <Container maxWidth={false}>
           <Formik
             initialValues={{
-              productName: "",
-              productPrice: "",
-              productDescription: ""
+              productName: product.productName || "",
+              productPrice: product.productPrice || "",
+              productDescription: product.productDescription || ""
             }}
             validationSchema={Yup.object().shape({
               productName: Yup.string()
@@ -157,14 +157,14 @@ const NewProduct = ({ onClose }) => {
                   >
                     <Box sx={{ py: 2 }}>
                       <Typography color="textPrimary" variant="h2">
-                        Add New Product
+                        Update Product
                       </Typography>
                       <Typography
                         color="textSecondary"
                         gutterBottom
                         variant="body2"
                       >
-                        New Product Form
+                        Update Product Form
                       </Typography>
                     </Box>
                     <Box
@@ -183,7 +183,7 @@ const NewProduct = ({ onClose }) => {
                         type="submit"
                         variant="contained"
                       >
-                        Add Product
+                        Update Product
                       </Button>
                     </Box>
                   </Box>
@@ -250,4 +250,4 @@ const NewProduct = ({ onClose }) => {
   );
 };
 
-export default NewProduct;
+export default UpdateProduct;

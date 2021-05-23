@@ -60,12 +60,24 @@ export default function ProductDetail({
             <Button color="primary" variant="contained" onClick={onClick}>
               Back to Products
             </Button>
-            <Button color="primary" variant="contained" onClick={onClickUpdate}>
-              Update
-            </Button>
-            <Button color="primary" variant="contained" onClick={onClickDelete}>
-              Delete
-            </Button>
+            <div>
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={onClickUpdate}
+                style={{ margin: 10 }}
+              >
+                Update
+              </Button>
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={onClickDelete}
+                style={{ margin: 10 }}
+              >
+                Delete
+              </Button>
+            </div>
           </Box>
           <Typography
             align="center"

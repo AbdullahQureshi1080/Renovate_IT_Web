@@ -17,6 +17,23 @@ const addProduct = (
     productCategory
   });
 
+const updateProduct = (
+  productId,
+  productName,
+  productDescription,
+  productPrice,
+  productImage,
+  productCategory
+) =>
+  client.post("shop/updateProduct", {
+    productId,
+    productName,
+    productDescription,
+    productPrice,
+    productImage,
+    productCategory
+  });
+
 const deleteProduct = (shopId, productId) =>
   client.post("shop/deleteProduct", {
     shopId,
@@ -28,10 +45,20 @@ const getShopProducts = (shopId) =>
     shopId
   });
 
+const getShopOrders = (shopId) =>
+  client.post("shop/getShopOrders", {
+    shopId
+  });
+
 const updateProfileImage = (shopId, image) =>
   client.post("shop/updateProfileImage", {
     shopId,
     image
+  });
+
+const getBuyerInfo = (buyerId) =>
+  client.post("shop/getBuyerInfo", {
+    buyerId
   });
 
 const getShopData = (shopId) =>
@@ -44,12 +71,25 @@ const updateShopData = (shopId, data) =>
     shopId,
     data
   });
+const acceptOrder = (orderId) =>
+  client.post("shop/acceptOrder", {
+    orderId
+  });
+const rejectOrder = (orderId) =>
+  client.post("shop/rejectOrder", {
+    orderId
+  });
 
 export default {
   addProduct,
+  updateProduct,
   getShopProducts,
   deleteProduct,
   updateProfileImage,
   getShopData,
-  updateShopData
+  getBuyerInfo,
+  getShopOrders,
+  updateShopData,
+  acceptOrder,
+  rejectOrder
 };

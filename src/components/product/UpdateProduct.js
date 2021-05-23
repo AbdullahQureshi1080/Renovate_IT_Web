@@ -25,11 +25,12 @@ const UpdateProduct = ({ onClose, product }) => {
   const state = useSelector((state) => state);
   const shop = state.entities.shop;
   const shopId = shop.data._id;
-  const shopEmail = shop.data.email;
+  const productId = product._id;
+  // const shopEmail = shop.data.email;
   const [isLoading, setIsLoading] = useState(false);
-  const [image, setImage] = useState(product.image);
-  const [value, setValue] = useState("");
-  const [preview, setPreview] = useState("");
+  const [image, setImage] = useState(product.productImage);
+  const [value, setValue] = useState(product.productCategory);
+  const [preview, setPreview] = useState(product.productImage);
 
   const handleSubmit = async ({
     productName,
@@ -62,22 +63,22 @@ const UpdateProduct = ({ onClose, product }) => {
     console.log("Data for Api", data);
     // // Api Call
     setIsLoading(true);
-    // const result = await shopAPI.updateProduct(
-    //   shopEmail,
-    //   productName,
-    //   productDescription,
-    //   productPrice,
-    //   imageUri,
-    //   value.value
-    // );
-    // if (!result.ok) {
-    //   setIsLoading(false);
-    //   return;
-    // }
-    // console.log(result.data);
-    // setIsLoading(false);
-    // onClose();
-    // navigate('/app/products', { replace: true, });
+
+    const result = await shopAPI.updateProduct(
+      productId,
+      productName,
+      productDescription,
+      productPrice,
+      imageUri,
+      value.value
+    );
+    if (!result.ok) {
+      setIsLoading(false);
+      return;
+    }
+    console.log(result.data);
+    setIsLoading(false);
+    onClose();
   };
 
   const imageHandler = async (e) => {

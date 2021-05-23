@@ -6,30 +6,23 @@ import {
   TextField,
   InputAdornment,
   SvgIcon
-} from '@material-ui/core';
-import { Search as SearchIcon } from 'react-feather';
+} from "@material-ui/core";
+import { Search as SearchIcon } from "react-feather";
 
-const CustomerListToolbar = (props) => (
+const OrderListToolbar = (props) => (
   <Box {...props}>
-    <Box
+    {/* <Box
       sx={{
-        display: 'flex',
-        justifyContent: 'flex-end'
+        display: "flex",
+        justifyContent: "flex-end"
       }}
     >
-      <Button>
-        Import
-      </Button>
-      <Button sx={{ mx: 1 }}>
-        Export
-      </Button>
-      <Button
-        color="primary"
-        variant="contained"
-      >
+      <Button>Import</Button>
+      <Button sx={{ mx: 1 }}>Export</Button>
+      <Button color="primary" variant="contained">
         Add customer
       </Button>
-    </Box>
+    </Box> */}
     <Box sx={{ mt: 3 }}>
       <Card>
         <CardContent>
@@ -39,16 +32,13 @@ const CustomerListToolbar = (props) => (
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <SvgIcon
-                      fontSize="small"
-                      color="action"
-                    >
+                    <SvgIcon fontSize="small" color="action">
                       <SearchIcon />
                     </SvgIcon>
                   </InputAdornment>
                 )
               }}
-              placeholder="Search customer"
+              placeholder="Search Order"
               variant="outlined"
             />
           </Box>
@@ -58,4 +48,4 @@ const CustomerListToolbar = (props) => (
   </Box>
 );
 
-export default CustomerListToolbar;
+export default OrderListToolbar;

@@ -21,7 +21,7 @@ import uploadAsPromise from "../../api/upload";
 import shopAPI from "../../api/shop";
 import ProductCategories from "./ProductCategories";
 
-const NewProduct = ({ onClose }) => {
+const NewProduct = ({ onClose, }) => {
   const state = useSelector((state) => state);
   const shop = state.entities.shop;
   const shopId = shop.data._id;

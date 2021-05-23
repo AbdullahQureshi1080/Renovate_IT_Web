@@ -12,14 +12,12 @@ import {
   Typography
 } from "@material-ui/core";
 import {
-  // AlertCircle as AlertCircleIcon,
   BarChart as BarChartIcon,
-  // Lock as LockIcon,
   Settings as SettingsIcon,
   ShoppingBag as ShoppingBagIcon,
   User as UserIcon,
-  // UserPlus as UserPlusIcon,
-  Users as UsersIcon
+  Users as UsersIcon,
+  Package as PackageIcon
 } from "react-feather";
 import NavItem from "./NavItem";
 import { useSelector } from "react-redux";
@@ -36,11 +34,11 @@ const items = [
     icon: BarChartIcon,
     title: "Dashboard"
   },
-  // {
-  //   href: "/app/customers",
-  //   icon: UsersIcon,
-  //   title: "Customers"
-  // },
+  {
+    href: "/app/orders",
+    icon: PackageIcon,
+    title: "Orders"
+  },
   {
     href: "/app/products",
     icon: ShoppingBagIcon,

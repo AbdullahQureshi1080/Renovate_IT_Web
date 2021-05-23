@@ -2,13 +2,11 @@ import { Helmet } from "react-helmet";
 import { Box, Container, Grid, Pagination, Button } from "@material-ui/core";
 import ProductListToolbar from "src/components/product/ProductListToolbar";
 import ProductCard from "src/components/product//ProductCard";
-// import products from 'src/__mocks__/products';
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import NewProduct from "src/components/product/NewProduct";
 import shopAPI from "../api/shop";
 import { useSelector } from "react-redux";
 import ProductDetail from "src/components/product/ProductDetail";
+import NewProduct from "src/components/product/NewProduct";
 import UpdateProduct from "src/components/product/UpdateProduct";
 
 const ProductList = () => {
@@ -28,6 +26,7 @@ const ProductList = () => {
   // const navigate = useNavigate();
   const handleFormRender = () => {
     setRenderForm(false);
+    getShopProducts();
   };
 
   const handleUpdateRender = () => {
@@ -92,9 +91,9 @@ const ProductList = () => {
             <Container maxWidth={false}>
               <ProductListToolbar onClickAdd={() => setRenderForm(true)} />
               <Box sx={{ pt: 3 }}>
-                <Grid container spacing={3}>
+                <Grid container spacing={4}>
                   {products.map((product) => (
-                    <Grid item key={product.id} lg={4} md={6} xs={12}>
+                    <Grid item key={product._id} lg={6} md={8} xs={12}>
                       <ProductCard
                         product={product}
                         onClick={() => productHandler(product)}

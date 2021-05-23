@@ -10,6 +10,7 @@ function Image({ imageHandler, preview, onRemove, previewHide, style }) {
   let imagePreviewUrl = preview;
   let $imagePreview = null;
   if (imagePreviewUrl) {
+    // $imagePreview = <img src={{ uri: imagePreviewUrl }} style={styles.image} />;
     $imagePreview = <img src={imagePreviewUrl} style={styles.image} />;
   } else {
     $imagePreview = (

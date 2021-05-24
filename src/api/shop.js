@@ -66,6 +66,11 @@ const getShopData = (shopId) =>
     shopId
   });
 
+const updateShopPassword = (shopId, password) =>
+  client.post("shop/updatePassword", {
+    shopId,
+    password
+  });
 const updateShopData = (shopId, data) =>
   client.post("shop/updateShopData", {
     shopId,
@@ -81,6 +86,7 @@ const rejectOrder = (orderId) =>
   });
 
 export default {
+  updateShopPassword,
   addProduct,
   updateProduct,
   getShopProducts,

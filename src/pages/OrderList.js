@@ -69,6 +69,17 @@ const OrderList = () => {
     fetchShopOrders();
   };
 
+  const onChangeHandler = (search) => {
+    if (search == "") {
+      fetchShopOrders();
+      return;
+    }
+    const searched = orders.filter(function (item) {
+      return item.orderId.includes(search);
+    });
+    setOrders(searched);
+  };
+
   return (
     <>
       <Helmet>
@@ -83,7 +94,7 @@ const OrderList = () => {
       >
         {!renderOrderDetails ? (
           <Container maxWidth={false}>
-            <OrderListToolbar />
+            <OrderListToolbar onChange={onChangeHandler} />
             <Box sx={{ pt: 3 }}>
               <OrderListResults
                 orders={orders}

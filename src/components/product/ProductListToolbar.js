@@ -6,9 +6,9 @@ import {
   TextField,
   InputAdornment,
   SvgIcon
-} from '@material-ui/core';
-import {useNavigate} from "react-router-dom";
-import { Search as SearchIcon } from 'react-feather';
+} from "@material-ui/core";
+import { useNavigate } from "react-router-dom";
+import { Search as SearchIcon } from "react-feather";
 
 // const navigate = useNavigate();
 //  handleClick = navigate("/new-product", {replace:true}),
@@ -17,21 +17,11 @@ const ProductListToolbar = (props) => (
   <Box {...props}>
     <Box
       sx={{
-        display: 'flex',
-        justifyContent: 'flex-end'
+        display: "flex",
+        justifyContent: "flex-end"
       }}
     >
-      {/* <Button>
-        Import
-      </Button> */}
-      {/* <Button sx={{ mx: 1 }}>
-        Export
-      </Button> */}
-      <Button
-        color="primary"
-        variant="contained"
-        onClick={props.onClickAdd}
-      >
+      <Button color="primary" variant="contained" onClick={props.onClickAdd}>
         Add product
       </Button>
     </Box>
@@ -44,15 +34,13 @@ const ProductListToolbar = (props) => (
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <SvgIcon
-                      fontSize="small"
-                      color="action"
-                    >
+                    <SvgIcon fontSize="small" color="action">
                       <SearchIcon />
                     </SvgIcon>
                   </InputAdornment>
                 )
               }}
+              onChange={props.onChange}
               placeholder="Search product"
               variant="outlined"
             />
@@ -61,6 +49,6 @@ const ProductListToolbar = (props) => (
       </Card>
     </Box>
   </Box>
-)
+);
 
 export default ProductListToolbar;

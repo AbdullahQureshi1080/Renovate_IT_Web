@@ -74,6 +74,17 @@ const ProductList = () => {
     getShopProducts();
   };
 
+  const onChangeHandler = (search) => {
+    if (search == "") {
+      getShopProducts();
+      return;
+    }
+    const searched = products.filter(function (item) {
+      return item.productName.includes(search);
+    });
+    setProducts(searched);
+  };
+
   return (
     <>
       <Helmet>
@@ -89,7 +100,10 @@ const ProductList = () => {
         {!renderProductDetails ? (
           !renderForm ? (
             <Container maxWidth={false}>
-              <ProductListToolbar onClickAdd={() => setRenderForm(true)} />
+              <ProductListToolbar
+                onClickAdd={() => setRenderForm(true)}
+                onChange={onChangeHandler}
+              />
               <Box sx={{ pt: 3 }}>
                 <Grid container spacing={4}>
                   {products.map((product) => (

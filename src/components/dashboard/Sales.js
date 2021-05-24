@@ -89,15 +89,15 @@ const Sales = (props) => {
   return (
     <Card {...props}>
       <CardHeader
-        action={(
-          <Button
-            endIcon={<ArrowDropDownIcon />}
-            size="small"
-            variant="text"
-          >
-            Last 7 days
-          </Button>
-        )}
+        // action={(
+        //   <Button
+        //     endIcon={<ArrowDropDownIcon />}
+        //     size="small"
+        //     variant="text"
+        //   >
+        //     Last 7 days
+        //   </Button>
+        // )}
         title="Latest Sales"
       />
       <Divider />
@@ -115,7 +115,7 @@ const Sales = (props) => {
         </Box>
       </CardContent>
       <Divider />
-      <Box
+      {/* <Box
         sx={{
           display: 'flex',
           justifyContent: 'flex-end',
@@ -130,7 +130,7 @@ const Sales = (props) => {
         >
           Overview
         </Button>
-      </Box>
+      </Box> */}
     </Card>
   );
 };

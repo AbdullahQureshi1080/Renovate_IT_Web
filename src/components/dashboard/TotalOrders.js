@@ -6,33 +6,33 @@ import {
   Grid,
   Typography
 } from "@material-ui/core";
+import PeopleIcon from "@material-ui/icons/PeopleOutlined";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
-import MoneyIcon from "@material-ui/icons/Money";
-import { red } from "@material-ui/core/colors";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import { green } from "@material-ui/core/colors";
+import { red } from "@material-ui/core/colors";
 
-const Budget = ({ orders, cost, ...props }) => (
-  <Card sx={{ height: "100%" }} {...props}>
+const TotalOrders = ({ orders, previousOrders, ...props }) => (
+  <Card {...props}>
     <CardContent>
-      <Grid container spacing={2} sx={{ justifyContent: "space-between" }}>
+      <Grid container spacing={3} sx={{ justifyContent: "space-between" }}>
         <Grid item>
           <Typography color="textSecondary" gutterBottom variant="h6">
-            ORDERS AMOUNT
+            TOTAL ORDERS
           </Typography>
           <Typography color="textPrimary" variant="h3">
-            {cost} RS
+            {orders.length}
           </Typography>
         </Grid>
         <Grid item>
           <Avatar
             sx={{
-              backgroundColor: red[600],
+              backgroundColor: green[600],
               height: 56,
               width: 56
             }}
           >
-            <MoneyIcon />
+            <PeopleIcon />
           </Avatar>
         </Grid>
       </Grid>
@@ -52,7 +52,7 @@ const Budget = ({ orders, cost, ...props }) => (
               mr: 1
             }}
           >
-            {Math.round((orders[orders.length - 1] / cost) * 100)}%
+            {Math.round(((previousOrders.length - 1) / orders.length) * 100)}%
           </Typography>
         </Box>
       ) : (
@@ -79,4 +79,4 @@ const Budget = ({ orders, cost, ...props }) => (
   </Card>
 );
 
-export default Budget;
+export default TotalOrders;

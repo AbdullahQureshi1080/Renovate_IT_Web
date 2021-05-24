@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Box,
   Button,
@@ -7,12 +7,17 @@ import {
   CardHeader,
   Divider,
   TextField
-} from '@material-ui/core';
-
+} from "@material-ui/core";
+import { useSelector } from "react-redux";
+import shopAPI from "../../api/shop";
 const SettingsPassword = (props) => {
+  const state = useSelector((state) => state);
+  const shop = state.entities.shop.data;
+  const shopId = shop._id;
+  const [isLoading, setIsLoading] = useState(false);
   const [values, setValues] = useState({
-    password: '',
-    confirm: ''
+    password: "",
+    confirm: ""
   });
 
   const handleChange = (event) => {
@@ -22,13 +27,23 @@ const SettingsPassword = (props) => {
     });
   };
 
+  const updatePassword = async () => {
+    const { password, confirm } = values;
+    console.log("Data for update Api", password, confirm);
+    if (password !== confirm) return alert("Password do not match");
+    const result = await shopAPI.updateShopPassword(shopId, password);
+    if (!result.ok) {
+      setIsLoading(false);
+      return;
+    }
+    console.log(result.data);
+    setIsLoading(false);
+  };
+
   return (
     <form {...props}>
       <Card>
-        <CardHeader
-          subheader="Update password"
-          title="Password"
-        />
+        <CardHeader subheader="Update password" title="Password" />
         <Divider />
         <CardContent>
           <TextField
@@ -55,15 +70,12 @@ const SettingsPassword = (props) => {
         <Divider />
         <Box
           sx={{
-            display: 'flex',
-            justifyContent: 'flex-end',
+            display: "flex",
+            justifyContent: "flex-end",
             p: 2
           }}
         >
-          <Button
-            color="primary"
-            variant="contained"
-          >
+          <Button color="primary" variant="contained" onClick={updatePassword}>
             Update
           </Button>
         </Box>

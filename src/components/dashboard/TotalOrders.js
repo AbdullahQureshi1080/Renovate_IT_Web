@@ -71,7 +71,7 @@ const TotalOrders = ({ orders, previousOrders, ...props }) => (
               mr: 1
             }}
           >
-            {orders[1] % (orders.length - 1)}%
+            {Math.round(((previousOrders.length - 1) / orders.length) * 100)}%
           </Typography>
         </Box>
       )}

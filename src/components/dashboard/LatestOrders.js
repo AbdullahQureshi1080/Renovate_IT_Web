@@ -23,7 +23,7 @@ const LatestOrders = ({ orders, ...props }) => (
     <CardHeader title="Latest Orders" />
     <Divider />
     <PerfectScrollbar>
-      <Box sx={{ minWidth: 600 }}>
+      <Box sx={{ minWidth: 500 }}>
         <Table>
           <TableHead>
             <TableRow>
@@ -39,16 +39,17 @@ const LatestOrders = ({ orders, ...props }) => (
             </TableRow>
           </TableHead>
           <TableBody>
-            {orders.map((order) => (
-              <TableRow hover key={order._id}>
-                <TableCell>{order._id}</TableCell>
-                <TableCell>{order.orderStatus}</TableCell>
-                <TableCell>{moment(order.date).format("DD/MM/YYYY")}</TableCell>
-                <TableCell>
-                  <Chip color="primary" label={order.status} size="small" />
-                </TableCell>
-              </TableRow>
-            ))}
+            {orders
+              .map((order) => (
+                <TableRow hover key={order._id}>
+                  <TableCell>{order._id}</TableCell>
+                  <TableCell>{order.orderStatus}</TableCell>
+                  <TableCell>
+                    {moment(order.date).format("DD/MM/YYYY")}
+                  </TableCell>
+                </TableRow>
+              ))
+              .slice(0, 5)}
           </TableBody>
         </Table>
       </Box>

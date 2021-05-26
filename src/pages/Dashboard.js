@@ -40,7 +40,10 @@ const Dashboard = () => {
     }
     console.log(result.data);
     setOrders(result.data);
-    const orderCostArray = result.data.map(
+    const recievedOrders = result.data.filter((order) => {
+      return order.orderStatus == "Confirmed";
+    });
+    const orderCostArray = recievedOrders.map(
       ({ totalOrderCost }) => totalOrderCost
     );
     const profitArray = orderCostArray.map((order) => {
@@ -94,10 +97,7 @@ const Dashboard = () => {
               <Budget orders={orders} cost={totalOrderCosts} />
             </Grid>
             <Grid item lg={6} sm={6} md={12} xl={9} xs={12}>
-              <TotalOrders
-                orders={shopOrders}
-                previousOrders={shopPrevOrders}
-              />
+              <TotalOrders orders={orders} previousOrders={shopPrevOrders} />
             </Grid>
             <Grid item lg={6} sm={6} md={12} xl={9} xs={12}>
               <TasksProgress status={statusProgress} orders={orders} />
@@ -105,12 +105,6 @@ const Dashboard = () => {
             <Grid item lg={6} sm={6} md={12} xl={9} xs={12}>
               <TotalProfit sx={{ height: "100%" }} profit={profit} />
             </Grid>
-            {/* <Grid item lg={8} md={12} xl={9} xs={12}>
-              <Sales />
-            </Grid> */}
-            {/* <Grid item lg={4} md={6} xl={3} xs={12}>
-              <TrafficByDevice sx={{ height: "100%" }} />
-            </Grid> */}
             <Grid item lg={6} sm={6} md={12} xl={9} xs={12}>
               <LatestProducts sx={{ height: "100%" }} products={products} />
             </Grid>
@@ -120,28 +114,6 @@ const Dashboard = () => {
           </Grid>
         </Container>
       </Box>
-      {/* <Box
-        sx={{
-          backgroundColor: "background.default",
-          minHeight: "100%",
-          py: 3
-        }}
-      >
-        <Container maxWidth={false}>
-          <Grid container spacing={3}>
-            <Grid item lg={8} md={12} xl={9} xs={12}>
-              <Budget />
-              <LatestOrders />
-              <LatestProducts />
-            </Grid>
-            <Grid item lg={8} md={12} xl={9} xs={12}>
-              <Budget />
-              <LatestOrders />
-              <LatestProducts />
-            </Grid>
-          </Grid>
-        </Container>
-      </Box> */}
     </>
   );
 };

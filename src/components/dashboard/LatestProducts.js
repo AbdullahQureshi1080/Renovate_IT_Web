@@ -23,27 +23,26 @@ const LatestProducts = ({ products, ...props }) => (
     />
     <Divider />
     <List>
-      {products.map((product, i) => (
-        <ListItem divider={i < products.length - 1} key={product._id}>
-          <ListItemAvatar>
-            <img
-              alt={product.productName}
-              src={product.productImage}
-              style={{
-                height: 48,
-                width: 48
-              }}
+      {products
+        .map((product, i) => (
+          <ListItem divider={i < products.length - 1} key={product._id}>
+            <ListItemAvatar>
+              <img
+                alt={product.productName}
+                src={product.productImage}
+                style={{
+                  height: 48,
+                  width: 48
+                }}
+              />
+            </ListItemAvatar>
+            <ListItemText
+              primary={product.productName}
+              secondary={`Updated ${product.date}`}
             />
-          </ListItemAvatar>
-          <ListItemText
-            primary={product.productName}
-            secondary={`Updated ${product.date.fromNow()}`}
-          />
-          <IconButton edge="end" size="small">
-            <MoreVertIcon />
-          </IconButton>
-        </ListItem>
-      ))}
+          </ListItem>
+        ))
+        .slice(0, 5)}
     </List>
     <Divider />
   </Card>

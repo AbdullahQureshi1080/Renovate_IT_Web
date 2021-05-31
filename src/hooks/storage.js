@@ -1,4 +1,4 @@
-import ls from 'local-storage'
+import ls from "local-storage";
 import jwtDecode from "jwt-decode";
 const key = "auth-token";
 
@@ -22,7 +22,7 @@ const getToken = async () => {
 
 const removeToken = async () => {
   try {
-    await ls.off(key);
+    await ls.remove(key);
     console.log("Token Removed");
   } catch (err) {
     console.log("Error removing the auth Token", err);
@@ -38,5 +38,5 @@ export default {
   getToken,
   getUser,
   removeToken,
-  storeToken,
+  storeToken
 };
